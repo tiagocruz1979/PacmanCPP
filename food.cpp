@@ -12,6 +12,7 @@ Food::~Food()
     //dtor
 }
 
+
  void Food::draw(sf::RenderWindow *w)
  {
      w->draw(this->corpo);

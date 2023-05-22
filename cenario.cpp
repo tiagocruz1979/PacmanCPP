@@ -38,7 +38,7 @@ std::vector<std::string> cenario0 = {
 {"pppppppppppppppppppppppppppppppppppp                                           p"},
 {"pppppppppppppppppppppppppppppppppppppppp                                       p"},
 {"ppppppppppppppppppppppppppppppppppppppppppppp                                  p"},
-{"p                                                                              p"},
+{"pp                                                                             p"},
 {"p                                                                              p"},
 {"p                                                                              p"},
 {"p                                                                              p"},

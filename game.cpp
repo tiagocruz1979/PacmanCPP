@@ -95,10 +95,12 @@ void Game::processarEntrada(sf::Event *event, float tempo)
 
 }
 
+
 void Game::atualizar(float tempo)
 {
 
 }
+
 
 void Game::renderizar()
 {

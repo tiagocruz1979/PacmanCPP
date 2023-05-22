@@ -28,5 +28,4 @@ class Pacman
         float posY = 0;
         float ant_posX = 0;
         float ant_posY = 0;
-
 };

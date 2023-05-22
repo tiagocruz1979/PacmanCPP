@@ -15,3 +15,4 @@ class Wall
     private:
         sf::RectangleShape brick;
 };
+

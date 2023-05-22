@@ -7,6 +7,7 @@ Wall::Wall(float x, float y)
     this->brick.setSize(sf::Vector2f(10.f,10.f));
 }
 
+
 Wall::~Wall()
 {
 

@@ -43,6 +43,7 @@ int main()
     game->finalizar();
     delete game;
 
+
     return 0;
 }
 

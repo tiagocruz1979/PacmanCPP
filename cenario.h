@@ -1,5 +1,4 @@
-#ifndef CENARIO_H_INCLUDED
-#define CENARIO_H_INCLUDED
+#pragma once
 
 #include <vector>
 #include <string>
@@ -10,4 +9,4 @@ extern std::vector<std::string> cenario2;
 
 std::vector<std::string>& getCenario(int index);
 
-#endif // CENARIO_H_INCLUDED
+

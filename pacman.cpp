@@ -69,6 +69,7 @@ void Pacman::memorizaPosicao()
     this->ant_posX = this->posX;
     this->ant_posY = this->posY;
 }
+
 void Pacman::restauraPosicaoValida()
 {
     std::cout << this->posX << "," << this->posY << " - " << this->ant_posX << "," << this->ant_posY << '\n';
