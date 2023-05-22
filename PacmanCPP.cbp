@@ -40,6 +40,8 @@
 			<Add library="C:/SFML/SFML-2.5.1_MW64/lib/libsfml-system.a" />
 			<Add library="C:/SFML/SFML-2.5.1_MW64/lib/libsfml-window.a" />
 		</Linker>
+		<Unit filename="cenario.cpp" />
+		<Unit filename="cenario.h" />
 		<Unit filename="food.cpp" />
 		<Unit filename="food.h" />
 		<Unit filename="game.cpp" />
