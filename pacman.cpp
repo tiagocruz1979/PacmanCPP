@@ -2,6 +2,7 @@
 #include <iostream>
 Pacman::Pacman()
 {
+   std::cout << "Construtor invocado\n";
    this->corpo = new sf::RectangleShape(sf::Vector2f(40.0,40.0));
    this->olho = new sf::RectangleShape(sf::Vector2f(5.0,5.0));
    this->corpo->setFillColor(sf::Color::Yellow);
@@ -9,10 +10,56 @@ Pacman::Pacman()
    direcao = 0; // 0 = Direita , 1 = baixo , 2 = esquerda , 3 = cima
 }
 
-Pacman::~Pacman()
+Pacman::~Pacman() // destrutor
 {
-    //dtor
+    delete this->olho;
+    delete this->corpo;
 }
+
+Pacman::Pacman(const Pacman& other) // construtor de cópias
+{
+   std::cout << "Construtor de copias invocado\n";
+
+    this->direcao = other.direcao;
+    this->posX = other.posX;
+    this->posY = other.posY;
+    this->ant_posX = other.ant_posX;
+    this->ant_posY = other.ant_posY;
+
+   this->corpo = new sf::RectangleShape();
+   this->corpo->setFillColor(other.corpo->getFillColor());
+   this->corpo->setSize(other.corpo->getSize());
+   this->olho = new sf::RectangleShape();
+   this->olho->setFillColor(other.olho->getFillColor());
+   this->olho->setSize(other.olho->getSize());
+   setPosition(this->posX,this->posY);
+
+   direcao = 0; // 0 = Direita , 1 = baixo , 2 = esquerda , 3 = cima
+}
+
+Pacman& Pacman::operator=(const Pacman& other) {
+   std::cout << "operator= invocado\n";
+
+    if (this == &other) {  // Verifica se é a mesma instância
+        return *this;
+    }
+
+    // Copia os membros da instância original para a nova instância
+    this->direcao = other.direcao;
+    this->posX = other.posX;
+    this->posY = other.posY;
+    this->ant_posX = other.ant_posX;
+    this->ant_posY = other.ant_posY;
+
+    this->corpo->setFillColor(other.corpo->getFillColor());
+    this->corpo->setSize(other.corpo->getSize());
+    this->olho->setFillColor(other.olho->getFillColor());
+    this->olho->setSize(other.olho->getSize());
+    setPosition(this->posX,this->posY);
+
+    return *this;
+}
+
 
 void Pacman::setDirecao(int d)
 {
@@ -72,7 +119,7 @@ void Pacman::memorizaPosicao()
 
 void Pacman::restauraPosicaoValida()
 {
-    std::cout << this->posX << "," << this->posY << " - " << this->ant_posX << "," << this->ant_posY << '\n';
+    //std::cout << this->posX << "," << this->posY << " - " << this->ant_posX << "," << this->ant_posY << '\n';
     setPosition(this->ant_posX, this->ant_posY);
 }
 
@@ -81,4 +128,13 @@ const sf::RectangleShape& Pacman::getShape()
     return *(this->corpo);
 }
 
+void Pacman::setColor(sf::Color c)
+{
+    this->corpo->setFillColor(c);
+}
+
+void Pacman::comer()
+{
+    this->comida++;
+}
 

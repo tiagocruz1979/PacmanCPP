@@ -40,6 +40,8 @@
 			<Add library="C:/SFML/SFML-2.5.1_MW64/lib/libsfml-system.a" />
 			<Add library="C:/SFML/SFML-2.5.1_MW64/lib/libsfml-window.a" />
 		</Linker>
+		<Unit filename="Ghost.cpp" />
+		<Unit filename="Ghost.h" />
 		<Unit filename="cenario.cpp" />
 		<Unit filename="cenario.h" />
 		<Unit filename="food.cpp" />
@@ -49,6 +51,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="pacman.cpp" />
 		<Unit filename="pacman.h" />
+		<Unit filename="portal.cpp" />
+		<Unit filename="portal.hpp" />
 		<Unit filename="wall.cpp" />
 		<Unit filename="wall.hpp" />
 		<Extensions>

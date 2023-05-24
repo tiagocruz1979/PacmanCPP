@@ -13,7 +13,8 @@ int main()
 {
 
     sf::RenderWindow window(sf::VideoMode(window_width, window_height), "PacmanCPP");
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(240);
+
 
     Game *game = new Game();
     game->inicializar(&window);
@@ -28,9 +29,9 @@ int main()
                 window.close();
         }
 
-        game->processarEntrada(&event, 2);
+        game->processarEntrada(&event,1.0);
 
-        game->atualizar(2.0);
+        game->atualizar(0.0);
 
         window.clear();
 

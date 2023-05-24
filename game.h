@@ -4,6 +4,8 @@
 #include "food.h"
 #include "wall.hpp"
 #include "cenario.h"
+#include "Ghost.h"
+#include "portal.hpp"
 
 const int window_width = 800;
 const int window_height = 600;
@@ -14,6 +16,11 @@ private:
     sf::RenderWindow *window;
 
     Pacman *pacman;
+    Pacman *pacman2;
+
+    Ghost *ghosts[4];
+
+    std::vector<Portal*> portais;
 
     std::vector<Food*> foods;
     std::vector<Wall*> bricks;

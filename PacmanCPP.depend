@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1684725533 source:e:\projetocpp\pacmancpp\main.cpp
+1684811368 source:e:\projetocpp\pacmancpp\main.cpp
 	<SFML/Graphics.hpp>
 	<cstdlib>
 	<ctime>
@@ -419,40 +419,54 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1684725455 source:e:\projetocpp\pacmancpp\game.cpp
+1684899243 source:e:\projetocpp\pacmancpp\game.cpp
 	"game.h"
 	<iostream>
 
-1684719634 e:\projetocpp\pacmancpp\game.h
+1684896482 e:\projetocpp\pacmancpp\game.h
 	<SFML/Graphics.hpp>
 	"pacman.h"
 	"food.h"
 	"wall.hpp"
 	"cenario.h"
+	"Ghost.h"
+	"portal.hpp"
 
-1684723798 source:e:\projetocpp\pacmancpp\pacman.cpp
+1684894481 source:e:\projetocpp\pacmancpp\pacman.cpp
 	"pacman.h"
 	<iostream>
 
-1684721723 e:\projetocpp\pacmancpp\pacman.h
+1684811637 e:\projetocpp\pacmancpp\pacman.h
 	<SFML/Graphics.hpp>
 
-1684722022 source:e:\projetocpp\pacmancpp\food.cpp
+1684802668 source:e:\projetocpp\pacmancpp\food.cpp
 	"food.h"
 
-1684722022 e:\projetocpp\pacmancpp\food.h
+1684728195 e:\projetocpp\pacmancpp\food.h
 	<SFML/Graphics.hpp>
 
-1684721756 source:e:\projetocpp\pacmancpp\wall.cpp
+1684728195 source:e:\projetocpp\pacmancpp\wall.cpp
 	"wall.hpp"
 
-1684721756 e:\projetocpp\pacmancpp\wall.hpp
+1684728195 e:\projetocpp\pacmancpp\wall.hpp
 	<SFML/Graphics.hpp>
 
-1683515285 e:\projetocpp\pacmancpp\cenario.h
+1684728195 e:\projetocpp\pacmancpp\cenario.h
 	<vector>
 	<string>
 
-1684723919 source:e:\projetocpp\pacmancpp\cenario.cpp
+1684899732 source:e:\projetocpp\pacmancpp\cenario.cpp
 	"cenario.h"
+
+1684899187 source:e:\projetocpp\pacmancpp\ghost.cpp
+	"Ghost.h"
+
+1684895291 e:\projetocpp\pacmancpp\ghost.h
+	<SFML/Graphics.hpp>
+
+1684898021 e:\projetocpp\pacmancpp\portal.hpp
+	<SFML/Graphics.hpp>
+
+1684898144 source:e:\projetocpp\pacmancpp\portal.cpp
+	"portal.hpp"
 
