@@ -5,7 +5,10 @@
 #include "wall.hpp"
 #include "cenario.h"
 #include "Ghost.h"
+<<<<<<< HEAD
 #include "portal.hpp"
+=======
+>>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
 
 const int window_width = 800;
 const int window_height = 600;
@@ -21,6 +24,8 @@ private:
     Ghost *ghosts[4];
 
     std::vector<Portal*> portais;
+
+    Ghost *ghosts[4];
 
     std::vector<Food*> foods;
     std::vector<Wall*> bricks;

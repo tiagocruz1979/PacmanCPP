@@ -2,7 +2,10 @@
 #include <iostream>
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
 void Game::finalizar()
 {
     delete this->window;
@@ -61,10 +64,22 @@ void Game::inicializar(sf::RenderWindow *w)
         }
     }
 
+<<<<<<< HEAD
     if (this->portais.size()>0) this->portais.at(0)->setPosTransportation(600.f,250.f);
     if (this->portais.size()>1) this->portais.at(1)->setPosTransportation(20.f,20.f);
 
 
+=======
+    for(int i = 0 ; i < 4 ; i++)
+    {
+        this->ghosts[i] = new Ghost();
+        this->ghosts[i]->setPosition(300.f,300.f);
+    }
+    this->ghosts[0]->setColor(sf::Color::Yellow);
+    this->ghosts[1]->setColor(sf::Color::Red);
+    this->ghosts[2]->setColor(sf::Color::Cyan);
+    this->ghosts[3]->setColor(sf::Color::White);
+>>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
 
 }
 
@@ -203,6 +218,7 @@ void Game::renderizar()
         this->bricks.at(i)->draw(this->window);
     }
 
+<<<<<<< HEAD
     vSize = static_cast<int>(this->portais.size());
     for(int i = 0 ; i < vSize ;i++)
     {
@@ -216,6 +232,13 @@ void Game::renderizar()
     {
         this->ghosts[i]->draw(this->window);
     }
+=======
+    for(int i = 0 ; i < 4 ; i++)
+    {
+        this->ghosts[i]->draw(this->window);
+    }
+
+>>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
 }
 
 Game::Game()
