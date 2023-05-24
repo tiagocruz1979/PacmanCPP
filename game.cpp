@@ -1,6 +1,7 @@
 #include "game.h"
 #include <iostream>
 
+
 void Game::finalizar()
 {
     delete this->window;
@@ -32,6 +33,16 @@ void Game::inicializar(sf::RenderWindow *w)
             }
         }
     }
+
+    for(int i = 0 ; i < 4 ; i++)
+    {
+        this->ghosts[i] = new Ghost();
+        this->ghosts[i]->setPosition(300.f,300.f);
+    }
+    this->ghosts[0]->setColor(sf::Color::Yellow);
+    this->ghosts[1]->setColor(sf::Color::Red);
+    this->ghosts[2]->setColor(sf::Color::Cyan);
+    this->ghosts[3]->setColor(sf::Color::White);
 
 }
 
@@ -117,6 +128,11 @@ void Game::renderizar()
     for(int i = 0 ; i < vSize ;i++)
     {
         this->bricks.at(i)->draw(this->window);
+    }
+
+    for(int i = 0 ; i < 4 ; i++)
+    {
+        this->ghosts[i]->draw(this->window);
     }
 
 }
