@@ -1,21 +1,21 @@
 #include "Ghost.h"
+#include <ctime>
+#include <cmath>
+#include <iostream>
 
 Ghost::Ghost()
 {
-<<<<<<< HEAD
+    this->direcao = 'D';
     this->cabeca = new sf::RectangleShape(sf::Vector2f(30.f,5.f));
     this->corpo = new sf::RectangleShape(sf::Vector2f(40.f,30.f));
     this->olho[0] = new sf::RectangleShape(sf::Vector2f(10.f,10.f));
     this->olho[1] = new sf::RectangleShape(sf::Vector2f(10.f,10.f));
-=======
-    this->corpo = new sf::RectangleShape(sf::Vector2f(40.f,40.f));
-    this->olho[0] = new sf::RectangleShape(sf::Vector2f(5.f,5.f));
-    this->olho[1] = new sf::RectangleShape(sf::Vector2f(5.f,5.f));
->>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
+
     for(int i = 0 ; i < 4 ; i++)
     {
         this->base[i] = new sf::RectangleShape(sf::Vector2f(5.f,5.f));
     }
+    setColor(gerarCor(0));
 
 }
 
@@ -41,47 +41,36 @@ Ghost& Ghost::operator=(const Ghost& rhs)
 }
 void Ghost::setPosition(float x, float y)
 {
-<<<<<<< HEAD
     this->cabeca->setPosition(sf::Vector2f(x+5.f,y));
     this->corpo->setPosition(sf::Vector2f(x,y+5.f));
     this->olho[0]->setPosition(sf::Vector2f(x,y));
     this->olho[1]->setPosition(sf::Vector2f(x,y));
     this->olho[0]->move(sf::Vector2f(5.f,8.f));
     this->olho[1]->move(sf::Vector2f(25.f,8.f));
-=======
-    this->corpo->setPosition(sf::Vector2f(x,y));
-    this->olho[0]->setPosition(sf::Vector2f(x,y));
-    this->olho[1]->setPosition(sf::Vector2f(x,y));
-    this->olho[0]->move(sf::Vector2f(5.f,5.f));
-    this->olho[1]->move(sf::Vector2f(30.f,5.f));
->>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
+
 
     float h = this->corpo->getSize().y + 5.f;
     for(int i = 0 ; i < 4 ; i++)
     {
-<<<<<<< HEAD
         this->base[i]->setPosition(sf::Vector2f(x+(i*10),y));
-=======
-        this->base[i]->setPosition(sf::Vector2f(x*10,y));
->>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
+
         this->base[i]->move(sf::Vector2f(0,h));
     }
-
 }
 
-<<<<<<< HEAD
+sf::Vector2f Ghost::getPosition()
+{
+    return sf::Vector2f(this->corpo->getPosition().x, this->corpo->getPosition().y-5.f);
+}
+
+
 void Ghost::setColor(sf::Color cor)
 {
     this->cabeca->setFillColor(cor);
     this->corpo->setFillColor(cor);
     this->olho[0]->setFillColor(sf::Color::Black);
     this->olho[1]->setFillColor(sf::Color::Black);
-=======
-void Ghost::setColor(sf::Color& cor)
-{
-    this->corpo->setFillColor(cor);
->>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
-    for(int i = 0 ; i < 4 ; i++)
+    for(int i = 0 ; i < 4;i++)
     {
         this->base[i]->setFillColor(cor);
     }
@@ -90,10 +79,7 @@ void Ghost::setColor(sf::Color& cor)
 
 void Ghost::draw(sf::RenderWindow *w)
 {
-<<<<<<< HEAD
     w->draw(*this->cabeca);
-=======
->>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
     w->draw(*this->corpo);
     w->draw(*this->olho[0]);
     w->draw(*this->olho[1]);
@@ -101,6 +87,101 @@ void Ghost::draw(sf::RenderWindow *w)
     {
         w->draw(*this->base[i]);
     }
-
 }
+
+sf::Color Ghost::gerarCor(int i)
+{
+    i = i % 4;
+    if(i==0)
+    {
+        return sf::Color::Green;
+    }
+    else if(i==1)
+    {
+        return sf::Color::Cyan;
+    }
+    else
+    {
+        return sf::Color::Red;
+    }
+}
+void Ghost::girarHor()
+{
+    char d = this->direcao;
+    char g;
+    if(d=='D') g='B';
+    else if(d=='B') g='E';
+    else if(d=='E') g='C';
+    else g='D';
+    this->direcao = g;
+}
+
+void Ghost::girarAnti()
+{
+    char d = this->direcao;
+    char g;
+    if(d=='D') g='C';
+    else if(d=='C') g='E';
+    else if(d=='E') g='B';
+    else g='D';
+    this->direcao = g;
+}
+
+void Ghost::girarRandom()
+{
+    int r = rand()%2;
+    if(r==0) girarHor();
+    else girarAnti();
+}
+
+void Ghost::mov(float v)
+{
+    char d = this->direcao;
+    sf::Vector2f pos = getPosition();
+    float x = pos.x;
+    float y = pos.y;
+
+    if(d=='B') y+=v;
+    else if(d=='E') x-=v;
+    else if(d=='C') y-=v;
+    else x+=v;
+
+    setPosition(x,y);
+}
+void Ghost::memorizarPosicao()
+{
+    sf::Vector2f pos = getPosition();
+    this->memoPosX = pos.x;
+    this->memoPosY = pos.y;
+}
+
+void Ghost::restaurarPosicao()
+{
+    setPosition(memoPosX,memoPosY);
+}
+
+bool Ghost::colision(const sf::RectangleShape &s)
+{
+    if(s.getGlobalBounds().intersects(this->corpo->getGlobalBounds()))
+    {
+        return true;
+    }
+    else if(s.getGlobalBounds().intersects(this->cabeca->getGlobalBounds()))
+    {
+        return true;
+    }
+    else
+    {
+        for(int i = 0 ; i < 4 ; i++)
+        {
+            if(s.getGlobalBounds().intersects(this->base[i]->getGlobalBounds()))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
 

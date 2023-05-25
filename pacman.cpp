@@ -81,6 +81,8 @@ void Pacman::draw(sf::RenderWindow* w)
 void Pacman::mov(float v)
 {
 
+    if(vivo==false) return;
+
     int dir = getDirecao();
 
     if(dir==0) posX+=v;
@@ -136,5 +138,11 @@ void Pacman::setColor(sf::Color c)
 void Pacman::comer()
 {
     this->comida++;
+}
+
+void Pacman::morre()
+{
+    setColor(sf::Color(100,100,100,50));
+    this->vivo = false;
 }
 

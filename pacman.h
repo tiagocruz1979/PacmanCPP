@@ -24,6 +24,7 @@ class Pacman
         const sf::RectangleShape& getShape();
 
         void comer();
+        void morre();
 
     protected:
 
@@ -36,4 +37,5 @@ class Pacman
         float ant_posX = 0;
         float ant_posY = 0;
         int comida = 0;
+        bool vivo = true;
 };

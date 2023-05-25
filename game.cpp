@@ -2,10 +2,6 @@
 #include <iostream>
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
 void Game::finalizar()
 {
     delete this->window;
@@ -24,17 +20,13 @@ void Game::inicializar(sf::RenderWindow *w)
     pacman2->setColor(sf::Color::Cyan);
     pacman2->memorizaPosicao();
 
-    for(int i = 0 ; i < 4 ;i++)
+    for(int i = 0 ; i < 4 ; i++)
     {
-      this->ghosts[i] = new Ghost();
-      this->ghosts[i]->setPosition(250.f+i*50.f,240.f);
+        Ghost *g = new Ghost();
+        g->setPosition(200.f+(50*i),240.f);
+        g->setColor(g->gerarCor(i));
+        this->ghosts.push_back(g);
     }
-    this->ghosts[0]->setColor(sf::Color::Cyan);
-    this->ghosts[1]->setColor(sf::Color::White);
-    this->ghosts[2]->setColor(sf::Color::Magenta);
-    this->ghosts[3]->setColor(sf::Color::Green);
-
-
 
     std::vector<std::string> &cen = getCenario(0);
     int linhas = cen.size();
@@ -64,22 +56,10 @@ void Game::inicializar(sf::RenderWindow *w)
         }
     }
 
-<<<<<<< HEAD
     if (this->portais.size()>0) this->portais.at(0)->setPosTransportation(600.f,250.f);
     if (this->portais.size()>1) this->portais.at(1)->setPosTransportation(20.f,20.f);
 
 
-=======
-    for(int i = 0 ; i < 4 ; i++)
-    {
-        this->ghosts[i] = new Ghost();
-        this->ghosts[i]->setPosition(300.f,300.f);
-    }
-    this->ghosts[0]->setColor(sf::Color::Yellow);
-    this->ghosts[1]->setColor(sf::Color::Red);
-    this->ghosts[2]->setColor(sf::Color::Cyan);
-    this->ghosts[3]->setColor(sf::Color::White);
->>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
 
 }
 
@@ -138,6 +118,13 @@ void Game::processarEntrada(sf::Event *event, float tempo)
             this->pacman2->mov(tempo);
         }
 
+        int nGhosts = this->ghosts.size();
+        for(int i = 0 ; i < nGhosts;i++)
+        {
+            this->ghosts.at(i)->memorizarPosicao();
+            this->ghosts.at(i)->mov(0.5);
+        }
+
 
     //colisoes
 
@@ -153,6 +140,15 @@ void Game::processarEntrada(sf::Event *event, float tempo)
         if(this->bricks.at(i)->getShape().getGlobalBounds().intersects(this->pacman2->getShape().getGlobalBounds()))
         {
             this->pacman2->restauraPosicaoValida();
+        }
+
+        for(int j = 0 ; j < nGhosts;j++)
+        {
+            if(this->ghosts.at(j)->colision(this->bricks.at(i)->getShape()))
+            {
+                this->ghosts.at(j)->restaurarPosicao();
+                this->ghosts.at(j)->girarRandom();
+            }
         }
     }
 
@@ -193,6 +189,22 @@ void Game::processarEntrada(sf::Event *event, float tempo)
         delete itemDeletar;
     }
 
+    //coliscao com fantastama
+    vSize = static_cast<int>(this->ghosts.size());
+    for(int i = 0 ; i < vSize;i++)
+    {
+        if(this->ghosts.at(i)->colision(this->pacman->getShape()))
+        {
+            this->pacman->morre();
+        }
+        if(this->ghosts.at(i)->colision(this->pacman2->getShape()))
+        {
+            this->pacman2->morre();
+        }
+
+    }
+
+
 }
 
 
@@ -218,27 +230,25 @@ void Game::renderizar()
         this->bricks.at(i)->draw(this->window);
     }
 
-<<<<<<< HEAD
+
     vSize = static_cast<int>(this->portais.size());
     for(int i = 0 ; i < vSize ;i++)
     {
         this->portais.at(i)->draw(this->window);
     }
 
+
+    int nGhosts = this->ghosts.size();
+    for(int i = 0 ; i < nGhosts;i++)
+    {
+        this->ghosts.at(i)->draw(this->window);
+    }
+
     this->pacman->draw(this->window);
     this->pacman2->draw(this->window);
 
-    for(int i = 0 ; i < 4;i++)
-    {
-        this->ghosts[i]->draw(this->window);
-    }
-=======
-    for(int i = 0 ; i < 4 ; i++)
-    {
-        this->ghosts[i]->draw(this->window);
-    }
 
->>>>>>> 8d2823b0164ba5196cc18c056cfa0bab944862a7
+
 }
 
 Game::Game()
@@ -255,14 +265,16 @@ Game::~Game()
         this->foods.pop_back();
     }
 
-    for(int i = 0 ; i < 4 ; i++)
+    n = this->ghosts.size();
+    for(int i = 0 ; i < n;i++)
     {
-        delete this->ghosts[i];
+        delete this->ghosts.at(i);
+        this->ghosts.pop_back();
     }
-    delete [] this->ghosts;
 
     delete this->pacman;
     delete this->pacman2;
 }
+
 
 
