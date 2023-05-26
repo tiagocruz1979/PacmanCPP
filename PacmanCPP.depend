@@ -419,7 +419,7 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1684982836 source:e:\projetocpp\pacmancpp\game.cpp
+1685068485 source:e:\projetocpp\pacmancpp\game.cpp
 	"game.h"
 	<iostream>
 
@@ -432,11 +432,12 @@
 	"Ghost.h"
 	"portal.hpp"
 
-1684982884 source:e:\projetocpp\pacmancpp\pacman.cpp
+1685069515 source:e:\projetocpp\pacmancpp\pacman.cpp
 	"pacman.h"
 	<iostream>
 
-1684982651 e:\projetocpp\pacmancpp\pacman.h
+1685072001 e:\projetocpp\pacmancpp\pacman.h
+	<SFML/Audio.hpp>
 	<SFML/Graphics.hpp>
 
 1684802668 source:e:\projetocpp\pacmancpp\food.cpp
@@ -451,16 +452,17 @@
 1684728195 e:\projetocpp\pacmancpp\wall.hpp
 	<SFML/Graphics.hpp>
 
-1684728195 e:\projetocpp\pacmancpp\cenario.h
+1685068307 e:\projetocpp\pacmancpp\cenario.h
 	<vector>
 	<string>
+	<SFML/Graphics.hpp>
 
-1684899732 source:e:\projetocpp\pacmancpp\cenario.cpp
+1685068741 source:e:\projetocpp\pacmancpp\cenario.cpp
 	"cenario.h"
 
 1684899732 D
 
-1684982364 source:e:\projetocpp\pacmancpp\ghost.cpp
+1684983198 source:e:\projetocpp\pacmancpp\ghost.cpp
 	"Ghost.h"
 	<ctime>
 	<cmath>
@@ -533,4 +535,108 @@
 	<SFML/Graphics.hpp>
 
 1684886295 823b0164ba5196cc18c056cfa0bab944862a7
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio.hpp
+	<SFML/System.hpp>
+	<SFML/Audio/InputSoundFile.hpp>
+	<SFML/Audio/Listener.hpp>
+	<SFML/Audio/Music.hpp>
+	<SFML/Audio/OutputSoundFile.hpp>
+	<SFML/Audio/Sound.hpp>
+	<SFML/Audio/SoundBuffer.hpp>
+	<SFML/Audio/SoundBufferRecorder.hpp>
+	<SFML/Audio/SoundFileFactory.hpp>
+	<SFML/Audio/SoundFileReader.hpp>
+	<SFML/Audio/SoundFileWriter.hpp>
+	<SFML/Audio/SoundRecorder.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/Audio/SoundStream.hpp>
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\inputsoundfile.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<algorithm>
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\export.hpp
+	<SFML/Config.hpp>
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\listener.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/Vector3.hpp>
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\music.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundStream.hpp>
+	<SFML/Audio/InputSoundFile.hpp>
+	<SFML/System/Mutex.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<vector>
+
+1652583549 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\soundstream.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/Time.hpp>
+	<SFML/System/Mutex.hpp>
+	<cstdlib>
+
+1652583549 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\soundsource.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Vector3.hpp>
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\alresource.hpp
+	<SFML/Audio/Export.hpp>
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\outputsoundfile.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<string>
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\sound.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/System/Time.hpp>
+	<cstdlib>
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\soundbuffer.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<vector>
+	<set>
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\soundbufferrecorder.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundBuffer.hpp>
+	<SFML/Audio/SoundRecorder.hpp>
+	<vector>
+
+1652583549 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\soundrecorder.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/Time.hpp>
+	<vector>
+	<string>
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\soundfilefactory.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
+	<vector>
+	<SFML/Audio/SoundFileFactory.inl>
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\soundfilefactory.inl
+
+1652583548 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\soundfilereader.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
+
+1652583549 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\soundfilewriter.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
 

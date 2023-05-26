@@ -43,6 +43,7 @@
 			<Add library="C:/SFML/SFML-2.5.1_MW64/lib/libsfml-graphics.a" />
 			<Add library="C:/SFML/SFML-2.5.1_MW64/lib/libsfml-system.a" />
 			<Add library="C:/SFML/SFML-2.5.1_MW64/lib/libsfml-window.a" />
+			<Add library="C:/SFML/SFML-2.5.1_MW64/lib/libsfml-audio.a" />
 		</Linker>
 		<Unit filename="Ghost.cpp" />
 		<Unit filename="Ghost.h" />

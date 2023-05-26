@@ -13,6 +13,26 @@ std::vector<std::string>& getCenario(int index) {
     return cenario0;
 }
 
+std::vector<sf::Vector2f>& getDestinoPortal(int index)
+{
+    static std::vector<sf::Vector2f> res;
+    if(index == 1)
+    {
+    }
+    else if(index == 2)
+    {
+        res.push_back(sf::Vector2f(20.f,20.f));
+    }
+    else
+    {
+        res.push_back(sf::Vector2f(20.f,20.f));
+        res.push_back(sf::Vector2f(200.f,200.f));
+        res.push_back(sf::Vector2f(200.f,20.f));
+    }
+
+    return res;
+}
+
 std::vector<std::string> cenario0 = {
 {"pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp"},
 {"p     pp                        ppp                                            p"},
@@ -38,7 +58,7 @@ std::vector<std::string> cenario0 = {
 {"ppppppppppppppppppppppppppppppp   f   f   f   f    f   f    f    f    f    f   p"},
 {"p                            pp                                                p"},
 {"pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp"},
-{"p      ppp                                            p                        p"},
+{"p      ppp                        t                   p                        p"},
 {"p  f   ppp   f                                        p                        p"},
 {"p      ppp                                            p   f    f    f      f   p"},
 {"p      ppp          f                                 p                        p"},

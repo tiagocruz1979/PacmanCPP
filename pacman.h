@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
 class Pacman
@@ -29,6 +30,11 @@ class Pacman
     protected:
 
     private:
+        sf::SoundBuffer bufferM;
+        sf::Sound soundM;
+
+        sf::SoundBuffer buffer;
+        sf::Sound sound;
         sf::RectangleShape *corpo;
         sf::RectangleShape *olho;
         int direcao;

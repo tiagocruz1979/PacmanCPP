@@ -28,7 +28,19 @@ void Game::inicializar(sf::RenderWindow *w)
         this->ghosts.push_back(g);
     }
 
-    std::vector<std::string> &cen = getCenario(0);
+    int idxCenario = 0;
+    std::vector<std::string> &cen = getCenario(idxCenario);
+    std::vector<sf::Vector2f> pDestino = getDestinoPortal(idxCenario);
+    int idxPortal = 0;
+
+    std::cout << "teste\n";
+    int tam = pDestino.size();
+    for(int i = 0 ; i < tam ; i++)
+    {
+        std::cout << pDestino.at(i).x << "," << pDestino.at(i).y << '\n';
+    }
+    std::cout << "fim\n";
+
     int linhas = cen.size();
     for(int i = 0 ; i < linhas; i++)
     {
@@ -50,7 +62,8 @@ void Game::inicializar(sf::RenderWindow *w)
                 Portal *p1 = new Portal();
                 p1->setColor(sf::Color::Blue);
                 p1->setPosition(i*10.f,j*10.f);
-                p1->setPosTransportation(20.f,20.f);
+                p1->setPosTransportation(pDestino.at(idxPortal).x,pDestino.at(idxPortal).y);
+                idxPortal++;
                 this->portais.push_back(p1);
             }
         }

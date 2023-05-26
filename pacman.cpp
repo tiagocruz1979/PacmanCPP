@@ -1,5 +1,6 @@
 #include "pacman.h"
 #include <iostream>
+
 Pacman::Pacman()
 {
    std::cout << "Construtor invocado\n";
@@ -8,6 +9,13 @@ Pacman::Pacman()
    this->corpo->setFillColor(sf::Color::Yellow);
    this->olho->setFillColor(sf::Color::Black);
    direcao = 0; // 0 = Direita , 1 = baixo , 2 = esquerda , 3 = cima
+
+    if (!this->buffer.loadFromFile("recursos/som/sfx-pop.wav")) {
+        // Tratar o erro caso o arquivo não seja carregado corretamente
+        std::cout << "arquivo de audio nao carregado\n";
+    }
+    this->sound.setBuffer(buffer);
+
 }
 
 Pacman::~Pacman() // destrutor
@@ -138,11 +146,21 @@ void Pacman::setColor(sf::Color c)
 void Pacman::comer()
 {
     this->comida++;
+    this->sound.play();
 }
 
 void Pacman::morre()
 {
-    setColor(sf::Color(100,100,100,50));
+    if(!this->vivo) return;
+
+    if(!bufferM.loadFromFile("recursos/som/sfx-horror7.wav"))//E:\ProjetoCPP\PacmanCPP\recursos\som\sfx-horror7.wav
+    {
+        std::cout << "Erro ao abrir arquivo de audio";
+    }
+    soundM.setBuffer(bufferM);
+    soundM.play();
+
+    setColor(sf::Color(50,50,50,200));
     this->vivo = false;
 }
 
