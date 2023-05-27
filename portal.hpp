@@ -10,7 +10,7 @@ class Portal
 
         void draw(sf::RenderWindow *w);
         void setColor(sf::Color cor);
-        void setPosTransportation(float x, float y);
+        void setPosTransportation(sf::Vector2f destino);
         void setPosition(float x, float y);
         sf::Vector2f getDestino();
         const sf::RectangleShape& getShape();

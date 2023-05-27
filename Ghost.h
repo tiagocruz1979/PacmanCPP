@@ -4,6 +4,7 @@
 class Ghost
 {
     public:
+
         Ghost();
         virtual ~Ghost();
         Ghost(const Ghost& other);
@@ -13,10 +14,9 @@ class Ghost
         sf::Vector2f getPosition();
 
         void setColor(sf::Color cor);
+        sf::Color gerarCor();
 
         void draw(sf::RenderWindow *w);
-
-        sf::Color gerarCor(int i=0);
 
         void girarHor();
         void girarAnti();
@@ -27,6 +27,7 @@ class Ghost
         void restaurarPosicao();
 
         bool colision(const sf::RectangleShape &s);
+
 
     protected:
 

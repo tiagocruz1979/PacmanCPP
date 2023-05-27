@@ -12,34 +12,17 @@ void Game::inicializar(sf::RenderWindow *w)
     this->window = w;
 
     pacman = new Pacman();
-    pacman->setPosition(20.f,20.f);
+    pacman->setPosition(10.f,10.f);
     pacman->memorizaPosicao();
 
     pacman2 = new Pacman();
-    pacman2->setPosition(20.f,20.f);
-    pacman2->setColor(sf::Color::Cyan);
+    pacman2->setPosition(10.f,60.f);
+    pacman2->setColor(sf::Color::Red);
     pacman2->memorizaPosicao();
 
-    for(int i = 0 ; i < 4 ; i++)
-    {
-        Ghost *g = new Ghost();
-        g->setPosition(200.f+(50*i),240.f);
-        g->setColor(g->gerarCor(i));
-        this->ghosts.push_back(g);
-    }
-
     int idxCenario = 0;
-    std::vector<std::string> &cen = getCenario(idxCenario);
-    std::vector<sf::Vector2f> pDestino = getDestinoPortal(idxCenario);
     int idxPortal = 0;
-
-    std::cout << "teste\n";
-    int tam = pDestino.size();
-    for(int i = 0 ; i < tam ; i++)
-    {
-        std::cout << pDestino.at(i).x << "," << pDestino.at(i).y << '\n';
-    }
-    std::cout << "fim\n";
+    std::vector<std::string> &cen = getCenario(idxCenario);
 
     int linhas = cen.size();
     for(int i = 0 ; i < linhas; i++)
@@ -58,21 +41,30 @@ void Game::inicializar(sf::RenderWindow *w)
             }
             else if(c=='t') // portal de transporte
             {
-                std::cout << "Criando portal \n";
+                //std::cout << "Criando portal \n";
                 Portal *p1 = new Portal();
-                p1->setColor(sf::Color::Blue);
+                p1->setColor(sf::Color(100,50,50,255));
                 p1->setPosition(i*10.f,j*10.f);
-                p1->setPosTransportation(pDestino.at(idxPortal).x,pDestino.at(idxPortal).y);
+                p1->setPosTransportation(getDestinoPortal(idxCenario,idxPortal));
+
+                sf::RectangleShape pd;
+                pd.setPosition(p1->getDestino());
+                pd.setFillColor(sf::Color(150,150,50,200));
+                pd.setSize(sf::Vector2f(40.f,40.f));
+
                 idxPortal++;
+
+                this->portalDestino.push_back(pd);
                 this->portais.push_back(p1);
+            }
+            else if(c=='g') // criando os fantasmas
+            {
+                Ghost *g = new Ghost();
+                g->setPosition(j*10.f,i*10.f);
+                this->ghosts.push_back(g);
             }
         }
     }
-
-    if (this->portais.size()>0) this->portais.at(0)->setPosTransportation(600.f,250.f);
-    if (this->portais.size()>1) this->portais.at(1)->setPosTransportation(20.f,20.f);
-
-
 
 }
 
@@ -177,6 +169,15 @@ void Game::processarEntrada(sf::Event *event, float tempo)
         {
             this->pacman2->setPosition(this->portais.at(i)->getDestino().x, this->portais.at(i)->getDestino().y);
         }
+
+        int n = this->ghosts.size();
+        for(int j = 0 ; j < n ; j++)
+        {
+            if(this->ghosts.at(j)->colision(this->portais.at(i)->getShape()))
+            {
+               this->ghosts.at(j)->setPosition(this->portais.at(i)->getDestino().x,this->portais.at(i)->getDestino().y);
+            }
+        }
     }
 
     // colisão com comida
@@ -248,6 +249,11 @@ void Game::renderizar()
     for(int i = 0 ; i < vSize ;i++)
     {
         this->portais.at(i)->draw(this->window);
+    }
+    vSize = static_cast<int>(this->portalDestino.size());
+    for(int i = 0 ; i < vSize ;i++)
+    {
+        this->window->draw(portalDestino.at(i));
     }
 
 

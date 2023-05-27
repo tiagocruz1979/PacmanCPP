@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1684811368 source:e:\projetocpp\pacmancpp\main.cpp
+1685159775 source:e:\projetocpp\pacmancpp\main.cpp
 	<SFML/Graphics.hpp>
 	<cstdlib>
 	<ctime>
@@ -419,11 +419,11 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1685068485 source:e:\projetocpp\pacmancpp\game.cpp
+1685160883 source:e:\projetocpp\pacmancpp\game.cpp
 	"game.h"
 	<iostream>
 
-1684979598 e:\projetocpp\pacmancpp\game.h
+1685157864 e:\projetocpp\pacmancpp\game.h
 	<SFML/Graphics.hpp>
 	"pacman.h"
 	"food.h"
@@ -432,49 +432,49 @@
 	"Ghost.h"
 	"portal.hpp"
 
-1685069515 source:e:\projetocpp\pacmancpp\pacman.cpp
+1685160835 source:e:\projetocpp\pacmancpp\pacman.cpp
 	"pacman.h"
 	<iostream>
 
-1685072001 e:\projetocpp\pacmancpp\pacman.h
+1685155418 e:\projetocpp\pacmancpp\pacman.h
 	<SFML/Audio.hpp>
 	<SFML/Graphics.hpp>
 
-1684802668 source:e:\projetocpp\pacmancpp\food.cpp
+1685155418 source:e:\projetocpp\pacmancpp\food.cpp
 	"food.h"
 
-1684728195 e:\projetocpp\pacmancpp\food.h
+1685155418 e:\projetocpp\pacmancpp\food.h
 	<SFML/Graphics.hpp>
 
-1684728195 source:e:\projetocpp\pacmancpp\wall.cpp
+1685155418 source:e:\projetocpp\pacmancpp\wall.cpp
 	"wall.hpp"
 
-1684728195 e:\projetocpp\pacmancpp\wall.hpp
+1685155418 e:\projetocpp\pacmancpp\wall.hpp
 	<SFML/Graphics.hpp>
 
-1685068307 e:\projetocpp\pacmancpp\cenario.h
+1685160342 e:\projetocpp\pacmancpp\cenario.h
 	<vector>
 	<string>
 	<SFML/Graphics.hpp>
 
-1685068741 source:e:\projetocpp\pacmancpp\cenario.cpp
+1685160757 source:e:\projetocpp\pacmancpp\cenario.cpp
 	"cenario.h"
 
 1684899732 D
 
-1684983198 source:e:\projetocpp\pacmancpp\ghost.cpp
+1685160901 source:e:\projetocpp\pacmancpp\ghost.cpp
 	"Ghost.h"
 	<ctime>
 	<cmath>
 	<iostream>
 
-1684981874 e:\projetocpp\pacmancpp\ghost.h
+1685156285 e:\projetocpp\pacmancpp\ghost.h
 	<SFML/Graphics.hpp>
 
-1684898021 e:\projetocpp\pacmancpp\portal.hpp
+1685160430 e:\projetocpp\pacmancpp\portal.hpp
 	<SFML/Graphics.hpp>
 
-1684898144 source:e:\projetocpp\pacmancpp\portal.cpp
+1685160430 source:e:\projetocpp\pacmancpp\portal.cpp
 	"portal.hpp"
 
 1684898144 p"

@@ -15,7 +15,7 @@ Ghost::Ghost()
     {
         this->base[i] = new sf::RectangleShape(sf::Vector2f(5.f,5.f));
     }
-    setColor(gerarCor(0));
+    setColor(gerarCor());
 
 }
 
@@ -68,8 +68,8 @@ void Ghost::setColor(sf::Color cor)
 {
     this->cabeca->setFillColor(cor);
     this->corpo->setFillColor(cor);
-    this->olho[0]->setFillColor(sf::Color::Black);
-    this->olho[1]->setFillColor(sf::Color::Black);
+    this->olho[0]->setFillColor(sf::Color(0,0,255,100));
+    this->olho[1]->setFillColor(sf::Color(0,0,255,100));
     for(int i = 0 ; i < 4;i++)
     {
         this->base[i]->setFillColor(cor);
@@ -89,20 +89,28 @@ void Ghost::draw(sf::RenderWindow *w)
     }
 }
 
-sf::Color Ghost::gerarCor(int i)
+sf::Color Ghost::gerarCor()
 {
-    i = i % 4;
-    if(i==0)
+    static int idCor = 0 ;
+    if(idCor==0)
     {
+        idCor++;
         return sf::Color::Green;
     }
-    else if(i==1)
+    else if(idCor==1)
     {
+        idCor++;
         return sf::Color::Cyan;
+    }
+    else if(idCor==2)
+    {
+        idCor++;
+        return sf::Color::Red;
     }
     else
     {
-        return sf::Color::Red;
+        idCor=0;
+        return sf::Color::White;
     }
 }
 void Ghost::girarHor()

@@ -21,6 +21,7 @@ private:
 
     std::vector<Ghost*> ghosts;
     std::vector<Portal*> portais;
+    std::vector<sf::RectangleShape> portalDestino;
     std::vector<Food*> foods;
     std::vector<Wall*> bricks;
 

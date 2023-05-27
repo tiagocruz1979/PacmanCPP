@@ -20,10 +20,10 @@ void Portal::setColor(sf::Color cor)
     this->corpo->setFillColor(cor);
 }
 
-void Portal::setPosTransportation(float x, float y)
+void Portal::setPosTransportation(sf::Vector2f destino)
 {
-    this->x = x;
-    this->y = y;
+    this->x = destino.x;
+    this->y = destino.y;
 }
 
 sf::Vector2f Portal::getDestino()

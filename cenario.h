@@ -9,6 +9,6 @@ extern std::vector<std::string> cenario1;
 extern std::vector<std::string> cenario2;
 
 std::vector<std::string>& getCenario(int index);
-std::vector<sf::Vector2f>& getDestinoPortal(int index);
+sf::Vector2f getDestinoPortal(int idCenario, int idPortal);
 
 
