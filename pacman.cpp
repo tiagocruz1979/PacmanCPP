@@ -8,7 +8,9 @@ Pacman::Pacman()
    this->olho = new sf::RectangleShape(sf::Vector2f(5.0,5.0));
    this->corpo->setFillColor(sf::Color::Yellow);
    this->olho->setFillColor(sf::Color::Black);
-   direcao = 0; // 0 = Direita , 1 = baixo , 2 = esquerda , 3 = cima
+   this->direcao = 0; // 0 = Direita , 1 = baixo , 2 = esquerda , 3 = cima
+   this->key = nullptr;
+
 
     if (!this->buffer.loadFromFile("recursos/som/sfx-pop.wav")) {
         // Tratar o erro caso o arquivo não seja carregado corretamente
@@ -22,6 +24,7 @@ Pacman::~Pacman() // destrutor
 {
     delete this->olho;
     delete this->corpo;
+    delete this->key;
 }
 
 Pacman::Pacman(const Pacman& other) // construtor de cópias
@@ -153,7 +156,7 @@ void Pacman::morre()
 {
     if(!this->vivo) return;
 
-    if(!bufferM.loadFromFile("recursos/som/sfx-horror7.wav"))//E:\ProjetoCPP\PacmanCPP\recursos\som\sfx-horror7.wav
+    if(!bufferM.loadFromFile("recursos/som/morte.wav"))//E:\ProjetoCPP\PacmanCPP\recursos\som\sfx-horror7.wav
     {
         std::cout << "Erro ao abrir arquivo de audio";
     }
@@ -163,4 +166,93 @@ void Pacman::morre()
     setColor(sf::Color(50,50,50,200));
     this->vivo = false;
 }
+
+
+
+
+bool Pacman::pegarChave(Key *key)
+{
+    if(this->key==nullptr)
+    {
+        this->key = key;
+        return true;
+    }
+    return false;
+}
+
+Key* Pacman::soltarChave()
+{
+    if(this->key==nullptr) return nullptr;
+
+    sf::Vector2f pos;
+    if(this->direcao==0 || this->direcao==1)
+    {
+        pos = sf::Vector2f(this->corpo->getPosition().x+40.f, this->corpo->getPosition().y);
+    }
+    else
+    {
+        pos = sf::Vector2f(this->corpo->getPosition().x-10.f, this->corpo->getPosition().y);
+    }
+    this->key->setPosition(pos);
+
+    return this->key;
+}
+
+Key* Pacman::getChave()
+{
+    return this->key;
+}
+
+
+bool Pacman::comandos(float tempo)
+{
+        if(sf::Keyboard::isKeyPressed(this->cAcima)) // seta para cima
+        {
+            setDirecao(3);
+            mov(tempo);
+        }
+
+        if(sf::Keyboard::isKeyPressed(this->cAbaixo)) // seta para Baixo
+        {
+            setDirecao(1);
+            mov(tempo);
+        }
+        if(sf::Keyboard::isKeyPressed(this->cEsquerda)) // seta para Esquerda
+        {
+            setDirecao(2);
+            mov(tempo);
+        }
+
+        if(sf::Keyboard::isKeyPressed(this->cDireita)) // seta para Direita
+        {
+            setDirecao(0);
+            mov(tempo);
+        }
+}
+
+void Pacman::setControles(sf::Keyboard::Key acima , sf::Keyboard::Key abaixo , sf::Keyboard::Key direita , sf::Keyboard::Key esquerda , sf::Keyboard::Key solta)
+{
+    this->cAbaixo = abaixo;
+    this->cAcima = acima;
+    this->cDireita = direita;
+    this->cEsquerda = esquerda;
+    this->cSolta = solta;
+}
+
+
+void Pacman::setChave(Key* key)
+{
+    this->key = key;
+}
+
+
+sf::Keyboard::Key Pacman::getTeclaComando(char comando)
+{
+    if(comando=='S')
+    {
+        return this->cSolta;
+    }
+}
+
+
 

@@ -419,11 +419,11 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1685160883 source:e:\projetocpp\pacmancpp\game.cpp
+1685250573 source:e:\projetocpp\pacmancpp\game.cpp
 	"game.h"
 	<iostream>
 
-1685157864 e:\projetocpp\pacmancpp\game.h
+1685239561 e:\projetocpp\pacmancpp\game.h
 	<SFML/Graphics.hpp>
 	"pacman.h"
 	"food.h"
@@ -431,19 +431,22 @@
 	"cenario.h"
 	"Ghost.h"
 	"portal.hpp"
+	"door.hpp"
+	"key.hpp"
 
-1685160835 source:e:\projetocpp\pacmancpp\pacman.cpp
+1685249903 source:e:\projetocpp\pacmancpp\pacman.cpp
 	"pacman.h"
 	<iostream>
 
-1685155418 e:\projetocpp\pacmancpp\pacman.h
+1685246909 e:\projetocpp\pacmancpp\pacman.h
 	<SFML/Audio.hpp>
 	<SFML/Graphics.hpp>
+	<key.hpp>
 
 1685155418 source:e:\projetocpp\pacmancpp\food.cpp
 	"food.h"
 
-1685155418 e:\projetocpp\pacmancpp\food.h
+1685244470 e:\projetocpp\pacmancpp\food.h
 	<SFML/Graphics.hpp>
 
 1685155418 source:e:\projetocpp\pacmancpp\wall.cpp
@@ -457,12 +460,12 @@
 	<string>
 	<SFML/Graphics.hpp>
 
-1685160757 source:e:\projetocpp\pacmancpp\cenario.cpp
+1685250609 source:e:\projetocpp\pacmancpp\cenario.cpp
 	"cenario.h"
 
 1684899732 D
 
-1685160901 source:e:\projetocpp\pacmancpp\ghost.cpp
+1685243119 source:e:\projetocpp\pacmancpp\ghost.cpp
 	"Ghost.h"
 	<ctime>
 	<cmath>
@@ -471,10 +474,11 @@
 1685156285 e:\projetocpp\pacmancpp\ghost.h
 	<SFML/Graphics.hpp>
 
-1685160430 e:\projetocpp\pacmancpp\portal.hpp
+1685250128 e:\projetocpp\pacmancpp\portal.hpp
 	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
 
-1685160430 source:e:\projetocpp\pacmancpp\portal.cpp
+1685250161 source:e:\projetocpp\pacmancpp\portal.cpp
 	"portal.hpp"
 
 1684898144 p"
@@ -639,4 +643,20 @@
 1652583549 c:\sfml\sfml-2.5.1_mw64\include\sfml\audio\soundfilewriter.hpp
 	<SFML/Audio/Export.hpp>
 	<string>
+
+1685250370 e:\projetocpp\pacmancpp\door.hpp
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+
+1685250357 source:e:\projetocpp\pacmancpp\door.cpp
+	"door.hpp"
+
+1685244597 source:e:\projetocpp\pacmancpp\key.cpp
+	"key.hpp"
+
+1685244470 e:\projetocpp\pacmancpp\key.hpp
+	<SFML/Graphics.hpp>
+
+1685244470 e:\projetocpp\pacmancpp\\key.hpp
+	<SFML/Graphics.hpp>
 

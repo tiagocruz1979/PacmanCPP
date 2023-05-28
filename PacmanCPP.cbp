@@ -49,10 +49,14 @@
 		<Unit filename="Ghost.h" />
 		<Unit filename="cenario.cpp" />
 		<Unit filename="cenario.h" />
+		<Unit filename="door.cpp" />
+		<Unit filename="door.hpp" />
 		<Unit filename="food.cpp" />
 		<Unit filename="food.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
+		<Unit filename="key.cpp" />
+		<Unit filename="key.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="pacman.cpp" />
 		<Unit filename="pacman.h" />

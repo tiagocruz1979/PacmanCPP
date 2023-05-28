@@ -39,3 +39,13 @@ const sf::RectangleShape& Portal::getShape()
 {
     return *this->corpo;
 }
+
+void Portal::som()
+{
+    if(!buffer.loadFromFile("recursos/som/transporte.wav"))
+    {
+        //std::cout << "Erro ao abrir arquivo de audio";
+    }
+    sound.setBuffer(buffer);
+    sound.play();
+}

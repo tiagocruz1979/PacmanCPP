@@ -9,6 +9,7 @@ class Food
 
         void draw(sf::RenderWindow *w);
         const sf::RectangleShape& getShape();
+        void setColor(sf::Color cor);
 
     protected:
 

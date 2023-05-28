@@ -11,14 +11,19 @@ void Game::inicializar(sf::RenderWindow *w)
 {
     this->window = w;
 
-    pacman = new Pacman();
-    pacman->setPosition(10.f,10.f);
-    pacman->memorizaPosicao();
+    Pacman *p1 = new Pacman();
+    p1->setPosition(550.f,430.f);
+    p1->memorizaPosicao();
+    p1->setColor(sf::Color::Blue);
+    p1->setControles(sf::Keyboard::Up,sf::Keyboard::Down,sf::Keyboard::Right,sf::Keyboard::Left,sf::Keyboard::Num0);
+    this->pacman.push_back(p1);
 
-    pacman2 = new Pacman();
-    pacman2->setPosition(10.f,60.f);
-    pacman2->setColor(sf::Color::Red);
-    pacman2->memorizaPosicao();
+    Pacman *p2 = new Pacman();
+    p2->setPosition(10.f,60.f);
+    p2->setColor(sf::Color::Red);
+    p2->memorizaPosicao();
+    p2->setControles(sf::Keyboard::W,sf::Keyboard::S,sf::Keyboard::D,sf::Keyboard::A,sf::Keyboard::Z);
+    this->pacman.push_back(p2);
 
     int idxCenario = 0;
     int idxPortal = 0;
@@ -63,6 +68,21 @@ void Game::inicializar(sf::RenderWindow *w)
                 g->setPosition(j*10.f,i*10.f);
                 this->ghosts.push_back(g);
             }
+            else if(c=='d') // porta vertical
+            {
+                Door *d = new Door(1001,j*10.f,i*10.f,40.f,10.f);
+                this->doors.push_back(d);
+            }
+            else if(c=='D') // porta horizontal
+            {
+                Door *d = new Door(1001,j*10.f,i*10.f,10.f,40.f);
+                this->doors.push_back(d);
+            }
+            else if(c=='k') // chave
+            {
+                Key *k = new Key(1001,j*10.f,i*10.f,20.f,10.f);
+                this->keys.push_back(k);
+            }
         }
     }
 
@@ -71,64 +91,32 @@ void Game::inicializar(sf::RenderWindow *w)
 void Game::processarEntrada(sf::Event *event, float tempo)
 {
 
-    this->pacman->memorizaPosicao();
-    this->pacman2->memorizaPosicao();
+    for(Pacman *p : this->pacman)
+    {
+        p->memorizaPosicao();
+        p->comandos(tempo);
 
-   // if(event->type == sf::Event::KeyPressed)
-   // {
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) // seta para cima
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::L)) // soltar
         {
-            this->pacman->setDirecao(3);
-            this->pacman->mov(tempo);
+            std::cout << "Tentando soltar a chave\n";
+            Key *k = p->soltarChave();
+            if(k!=nullptr)
+            {
+                std::cout << "existe a chave\n";
+                this->keys.push_back(k);
+                p->setChave(nullptr);
+                break;
+            }
         }
+    }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) // seta para Baixo
-        {
-            this->pacman->setDirecao(1);
-            this->pacman->mov(tempo);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) // seta para Esquerda
-        {
-            this->pacman->setDirecao(2);
-            this->pacman->mov(tempo);
-        }
+    for(Ghost *g : this->ghosts)
+    {
+        g->memorizarPosicao();
+        g->mov(0.5);
+    }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) // seta para Direita
-        {
-            this->pacman->setDirecao(0);
-            this->pacman->mov(tempo);
-        }
-   // }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))// seta para cima
-        {
-            this->pacman2->setDirecao(3);
-            this->pacman2->mov(tempo);
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // seta para Baixo
-        {
-            this->pacman2->setDirecao(1);
-            this->pacman2->mov(tempo);
-        }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // seta para Esquerda
-        {
-            this->pacman2->setDirecao(2);
-            this->pacman2->mov(tempo);
-        }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // seta para Direita
-        {
-            this->pacman2->setDirecao(0);
-            this->pacman2->mov(tempo);
-        }
-
-        int nGhosts = this->ghosts.size();
-        for(int i = 0 ; i < nGhosts;i++)
-        {
-            this->ghosts.at(i)->memorizarPosicao();
-            this->ghosts.at(i)->mov(0.5);
-        }
 
 
     //colisoes
@@ -138,21 +126,20 @@ void Game::processarEntrada(sf::Event *event, float tempo)
     vSize = static_cast<int>(this->bricks.size());
     for(int i =0; i < vSize ;i++)
     {
-        if(this->bricks.at(i)->getShape().getGlobalBounds().intersects(this->pacman->getShape().getGlobalBounds()))
+        for(int p = 0 ; p < 2 ;p++)
         {
-            this->pacman->restauraPosicaoValida();
-        }
-        if(this->bricks.at(i)->getShape().getGlobalBounds().intersects(this->pacman2->getShape().getGlobalBounds()))
-        {
-            this->pacman2->restauraPosicaoValida();
+            if(this->bricks.at(i)->getShape().getGlobalBounds().intersects(this->pacman.at(p)->getShape().getGlobalBounds()))
+            {
+                this->pacman.at(p)->restauraPosicaoValida();
+            }
         }
 
-        for(int j = 0 ; j < nGhosts;j++)
+        for(Ghost *g : this->ghosts)
         {
-            if(this->ghosts.at(j)->colision(this->bricks.at(i)->getShape()))
+            if(g->colision(this->bricks.at(i)->getShape()))
             {
-                this->ghosts.at(j)->restaurarPosicao();
-                this->ghosts.at(j)->girarRandom();
+                g->restaurarPosicao();
+                g->girarRandom();
             }
         }
     }
@@ -161,13 +148,13 @@ void Game::processarEntrada(sf::Event *event, float tempo)
     vSize = static_cast<int>(this->portais.size());
     for(int i = 0 ; i < vSize ;i++)
     {
-        if(this->portais.at(i)->getShape().getGlobalBounds().intersects(this->pacman->getShape().getGlobalBounds()))
+        for(int p = 0 ; p < 2 ;p++)
         {
-            this->pacman->setPosition(this->portais.at(i)->getDestino().x, this->portais.at(i)->getDestino().y);
-        }
-        if(this->portais.at(i)->getShape().getGlobalBounds().intersects(this->pacman2->getShape().getGlobalBounds()))
-        {
-            this->pacman2->setPosition(this->portais.at(i)->getDestino().x, this->portais.at(i)->getDestino().y);
+            if(this->portais.at(i)->getShape().getGlobalBounds().intersects(this->pacman.at(p)->getShape().getGlobalBounds()))
+            {
+                this->pacman.at(p)->setPosition(this->portais.at(i)->getDestino().x, this->portais.at(i)->getDestino().y);
+                this->portais.at(i)->som();
+            }
         }
 
         int n = this->ghosts.size();
@@ -185,15 +172,13 @@ void Game::processarEntrada(sf::Event *event, float tempo)
     int idelete = -1;
     for(int i =0; i < vSize ;i++)
     {
-        if(this->foods.at(i)->getShape().getGlobalBounds().intersects(this->pacman->getShape().getGlobalBounds()))
+        for(int p = 0 ; p < 2 ;p++)
         {
-            idelete = i;
-            this->pacman->comer();
-        }
-        if(this->foods.at(i)->getShape().getGlobalBounds().intersects(this->pacman2->getShape().getGlobalBounds()))
-        {
-            idelete = i;
-            this->pacman2->comer();
+            if(this->foods.at(i)->getShape().getGlobalBounds().intersects(this->pacman.at(p)->getShape().getGlobalBounds()))
+            {
+                idelete = i;
+                this->pacman.at(p)->comer();
+            }
         }
     }
     if(idelete>=0)
@@ -207,17 +192,64 @@ void Game::processarEntrada(sf::Event *event, float tempo)
     vSize = static_cast<int>(this->ghosts.size());
     for(int i = 0 ; i < vSize;i++)
     {
-        if(this->ghosts.at(i)->colision(this->pacman->getShape()))
+        for(int p = 0 ; p < 2 ; p++)
         {
-            this->pacman->morre();
+            if(this->ghosts.at(i)->colision(this->pacman.at(p)->getShape()))
+            {
+                this->pacman.at(p)->morre();
+            }
         }
-        if(this->ghosts.at(i)->colision(this->pacman2->getShape()))
-        {
-            this->pacman2->morre();
-        }
-
     }
 
+
+
+        //colisao com chave
+        vSize = static_cast<int>(this->keys.size());
+        idelete = -1;
+        for(int i = 0 ; i < vSize ;i++)
+        {
+            for(Pacman *p: this->pacman)
+            {
+                if(p->getShape().getGlobalBounds().intersects(this->keys.at(i)->getShape().getGlobalBounds()))
+                {
+                    if(p->pegarChave(this->keys.at(i)))
+                    {
+                        //this->keys.erase(this->keys.begin()+i);
+                        idelete = i;
+                        break;
+                    }
+                }
+            }
+         }
+         if(idelete>=0) this->keys.erase(this->keys.begin()+idelete);
+
+
+        vSize = static_cast<int>(this->doors.size());
+        idelete=-1;
+        for(int i = 0 ; i < vSize ;i++)
+        {
+            for(Pacman *p : this->pacman)
+            {
+                if(p->getShape().getGlobalBounds().intersects(this->doors.at(i)->getShape().getGlobalBounds()))
+                {
+                    if(p->getChave() != nullptr && p->getChave()->getSegredo()==this->doors.at(i)->getSegredo())
+                    {
+                        this->doors.at(i)->som();
+                        std::cout << "porta aberta\n";
+                        idelete = i;
+                        p->setChave(nullptr);
+                        //this->doors.erase(this->doors.begin()+i);
+                        break;
+                    }
+                    else
+                    {
+                        std::cout << "Tipo incorreto da chave\n";
+                        p->restauraPosicaoValida();
+                    }
+                }
+            }
+        }
+        if(idelete>=0) this->doors.erase(this->doors.begin()+idelete);
 
 }
 
@@ -263,8 +295,22 @@ void Game::renderizar()
         this->ghosts.at(i)->draw(this->window);
     }
 
-    this->pacman->draw(this->window);
-    this->pacman2->draw(this->window);
+    int nDoors = this->doors.size();
+    for(int i = 0 ; i < nDoors;i++)
+    {
+        this->doors.at(i)->draw(this->window);
+    }
+
+    int nKeys = this->keys.size();
+    for(int i = 0 ; i < nKeys;i++)
+    {
+        this->keys.at(i)->draw(this->window);
+    }
+
+    for(Pacman *p : this->pacman)
+    {
+        p->draw(this->window);
+    }
 
 
 
@@ -291,8 +337,20 @@ Game::~Game()
         this->ghosts.pop_back();
     }
 
-    delete this->pacman;
-    delete this->pacman2;
+    n = this->doors.size();
+    for(int i = 0 ; i < n ; i++)
+    {
+        delete this->doors.at(i);
+        this->doors.pop_back();
+    }
+
+    n = this->pacman.size();
+    for(int i = 0 ; i < n ; i++)
+    {
+        delete this->pacman.at(i);
+        this->pacman.pop_back();
+    }
+
 }
 
 

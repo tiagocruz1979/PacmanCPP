@@ -26,6 +26,7 @@ Ghost::~Ghost()
     delete this->olho[1];
     for(int i = 0 ; i < 4 ; i++)
         delete this->base[i];
+
 }
 
 Ghost::Ghost(const Ghost& other)

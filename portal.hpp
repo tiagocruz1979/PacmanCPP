@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 
 class Portal
@@ -14,6 +15,7 @@ class Portal
         void setPosition(float x, float y);
         sf::Vector2f getDestino();
         const sf::RectangleShape& getShape();
+        void som();
 
 
 
@@ -22,6 +24,8 @@ class Portal
     private:
         sf::RectangleShape *corpo;
         float x,y;
+        sf::SoundBuffer buffer;
+        sf::Sound sound;
 };
 
 

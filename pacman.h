@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <key.hpp>
 
 class Pacman
 {
@@ -27,6 +28,17 @@ class Pacman
         void comer();
         void morre();
 
+        bool pegarChave(Key *key);
+        bool usarChave(Key *key);
+        Key* soltarChave();
+        Key* getChave();
+        void setChave(Key* key);
+
+        void setControles(sf::Keyboard::Key acima, sf::Keyboard::Key abaixo , sf::Keyboard::Key direita , sf::Keyboard::Key esquerda , sf::Keyboard::Key solta);
+        sf::Keyboard::Key getTeclaComando(char comando);
+        bool comandos(float tempo);
+
+
     protected:
 
     private:
@@ -44,4 +56,11 @@ class Pacman
         float ant_posY = 0;
         int comida = 0;
         bool vivo = true;
+        Key *key = nullptr;
+
+        sf::Keyboard::Key cAcima;
+        sf::Keyboard::Key cAbaixo;
+        sf::Keyboard::Key cDireita;
+        sf::Keyboard::Key cEsquerda;
+        sf::Keyboard::Key cSolta;
 };

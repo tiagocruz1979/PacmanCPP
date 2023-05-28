@@ -6,9 +6,11 @@
 #include "cenario.h"
 #include "Ghost.h"
 #include "portal.hpp"
+#include "door.hpp"
+#include "key.hpp"
 
 
-const int window_width = 800;
+const int window_width = 1024;
 const int window_height = 600;
 
 class Game
@@ -16,14 +18,14 @@ class Game
 private:
     sf::RenderWindow *window;
 
-    Pacman *pacman;
-    Pacman *pacman2;
-
+    std::vector<Pacman*> pacman;
     std::vector<Ghost*> ghosts;
     std::vector<Portal*> portais;
     std::vector<sf::RectangleShape> portalDestino;
     std::vector<Food*> foods;
     std::vector<Wall*> bricks;
+    std::vector<Door*> doors;
+    std::vector<Key*> keys;
 
 public:
     Game();
