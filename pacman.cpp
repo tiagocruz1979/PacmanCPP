@@ -8,7 +8,7 @@ Pacman::Pacman()
    this->olho = new sf::RectangleShape(sf::Vector2f(5.0,5.0));
    this->corpo->setFillColor(sf::Color::Yellow);
    this->olho->setFillColor(sf::Color::Black);
-   this->direcao = 0; // 0 = Direita , 1 = baixo , 2 = esquerda , 3 = cima
+   this->direcao = 'D';
    this->key = nullptr;
 
 
@@ -45,7 +45,7 @@ Pacman::Pacman(const Pacman& other) // construtor de cópias
    this->olho->setSize(other.olho->getSize());
    setPosition(this->posX,this->posY);
 
-   direcao = 0; // 0 = Direita , 1 = baixo , 2 = esquerda , 3 = cima
+   direcao = 'D';
 }
 
 Pacman& Pacman::operator=(const Pacman& other) {
@@ -72,12 +72,12 @@ Pacman& Pacman::operator=(const Pacman& other) {
 }
 
 
-void Pacman::setDirecao(int d)
+void Pacman::setDirecao(char d)
 {
     this->direcao = d;
 }
 
-int Pacman::getDirecao()
+char Pacman::getDirecao()
 {
     return this->direcao;
 }
@@ -96,10 +96,10 @@ void Pacman::mov(float v)
 
     int dir = getDirecao();
 
-    if(dir==0) posX+=v;
-    else if(dir==1) posY+=v;
-    else if(dir==2) posX-=v;
-    else posY-=v;
+    if(dir=='D') posX+=v;
+    else if(dir=='B') posY+=v;
+    else if(dir=='E') posX-=v;
+    else if(dir=='C') posY-=v;
 
     setPosition(this->posX,this->posY);
 }
@@ -110,14 +110,14 @@ void Pacman::setPosition(float x, float y)
     this->posX = x;
     this->posY = y;
 
-    int dir = getDirecao();
+    char dir = getDirecao();
     float xolho = x;
     float yolho = y;
 
     this->olho->setPosition(sf::Vector2f(xolho,yolho));
-    if      (dir==0) this->olho->move(sf::Vector2f(30.0,5.0));
-    else if (dir==1) this->olho->move(sf::Vector2f(5.0,30.0));
-    else if (dir==2) this->olho->move(sf::Vector2f(5.0,5.0));
+    if      (dir=='D') this->olho->move(sf::Vector2f(30.0,5.0));
+    else if (dir=='B') this->olho->move(sf::Vector2f(5.0,30.0));
+    else if (dir=='E') this->olho->move(sf::Vector2f(5.0,5.0));
     else             this->olho->move(sf::Vector2f(5.0,5.0));
 
     this->corpo->setPosition(x,y);
@@ -185,7 +185,7 @@ Key* Pacman::soltarChave()
     if(this->key==nullptr) return nullptr;
 
     sf::Vector2f pos;
-    if(this->direcao==0 || this->direcao==1)
+    if(this->direcao=='D' || this->direcao=='C')
     {
         pos = sf::Vector2f(this->corpo->getPosition().x+40.f, this->corpo->getPosition().y);
     }
@@ -208,24 +208,24 @@ bool Pacman::comandos(float tempo)
 {
         if(sf::Keyboard::isKeyPressed(this->cAcima)) // seta para cima
         {
-            setDirecao(3);
+            setDirecao('C');
             mov(tempo);
         }
 
         if(sf::Keyboard::isKeyPressed(this->cAbaixo)) // seta para Baixo
         {
-            setDirecao(1);
+            setDirecao('B');
             mov(tempo);
         }
         if(sf::Keyboard::isKeyPressed(this->cEsquerda)) // seta para Esquerda
         {
-            setDirecao(2);
+            setDirecao('E');
             mov(tempo);
         }
 
         if(sf::Keyboard::isKeyPressed(this->cDireita)) // seta para Direita
         {
-            setDirecao(0);
+            setDirecao('D');
             mov(tempo);
         }
 }
@@ -254,5 +254,8 @@ sf::Keyboard::Key Pacman::getTeclaComando(char comando)
     }
 }
 
-
+int Pacman::getQuantidadeComida()
+{
+    return this->comida;
+}
 

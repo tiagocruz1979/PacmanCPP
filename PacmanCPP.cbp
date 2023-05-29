@@ -47,6 +47,8 @@
 		</Linker>
 		<Unit filename="Ghost.cpp" />
 		<Unit filename="Ghost.h" />
+		<Unit filename="caixa.cpp" />
+		<Unit filename="caixa.hpp" />
 		<Unit filename="cenario.cpp" />
 		<Unit filename="cenario.h" />
 		<Unit filename="door.cpp" />
@@ -60,6 +62,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="pacman.cpp" />
 		<Unit filename="pacman.h" />
+		<Unit filename="painel.cpp" />
+		<Unit filename="painel.hpp" />
 		<Unit filename="portal.cpp" />
 		<Unit filename="portal.hpp" />
 		<Unit filename="wall.cpp" />

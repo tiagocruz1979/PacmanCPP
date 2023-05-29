@@ -8,6 +8,8 @@
 #include "portal.hpp"
 #include "door.hpp"
 #include "key.hpp"
+#include "painel.hpp"
+#include "caixa.hpp"
 
 
 const int window_width = 1024;
@@ -26,6 +28,8 @@ private:
     std::vector<Wall*> bricks;
     std::vector<Door*> doors;
     std::vector<Key*> keys;
+    std::vector<Painel*>paineis;
+    std::vector<Caixa*>caixas;
 
 public:
     Game();
@@ -35,4 +39,10 @@ public:
     void atualizar(float tempo);
     void renderizar();
     void finalizar();
+
+    sf::Texture imgPacman;
+    sf::Sprite sptPacman;
+
+    sf::Texture imgFundo;
+    sf::Sprite sptFundo;
 };

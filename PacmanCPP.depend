@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1685159775 source:e:\projetocpp\pacmancpp\main.cpp
+1685312704 source:e:\projetocpp\pacmancpp\main.cpp
 	<SFML/Graphics.hpp>
 	<cstdlib>
 	<ctime>
@@ -419,11 +419,11 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1685250573 source:e:\projetocpp\pacmancpp\game.cpp
+1685328841 source:e:\projetocpp\pacmancpp\game.cpp
 	"game.h"
 	<iostream>
 
-1685239561 e:\projetocpp\pacmancpp\game.h
+1685319927 e:\projetocpp\pacmancpp\game.h
 	<SFML/Graphics.hpp>
 	"pacman.h"
 	"food.h"
@@ -433,12 +433,14 @@
 	"portal.hpp"
 	"door.hpp"
 	"key.hpp"
+	"painel.hpp"
+	"caixa.hpp"
 
-1685249903 source:e:\projetocpp\pacmancpp\pacman.cpp
+1685325044 source:e:\projetocpp\pacmancpp\pacman.cpp
 	"pacman.h"
 	<iostream>
 
-1685246909 e:\projetocpp\pacmancpp\pacman.h
+1685324953 e:\projetocpp\pacmancpp\pacman.h
 	<SFML/Audio.hpp>
 	<SFML/Graphics.hpp>
 	<key.hpp>
@@ -460,7 +462,7 @@
 	<string>
 	<SFML/Graphics.hpp>
 
-1685250609 source:e:\projetocpp\pacmancpp\cenario.cpp
+1685328882 source:e:\projetocpp\pacmancpp\cenario.cpp
 	"cenario.h"
 
 1684899732 D
@@ -659,4 +661,23 @@
 
 1685244470 e:\projetocpp\pacmancpp\\key.hpp
 	<SFML/Graphics.hpp>
+
+1685318412 e:\projetocpp\pacmancpp\painel.hpp
+	<SFML/Graphics.hpp>
+	<pacman.h>
+
+1685318854 source:e:\projetocpp\pacmancpp\painel.cpp
+	"painel.hpp"
+
+1685324953 e:\projetocpp\pacmancpp\\pacman.h
+	<SFML/Audio.hpp>
+	<SFML/Graphics.hpp>
+	<key.hpp>
+
+1685328650 source:e:\projetocpp\pacmancpp\caixa.cpp
+	"caixa.hpp"
+
+1685327797 e:\projetocpp\pacmancpp\caixa.hpp
+	<SFML/Graphics.hpp>
+	<iostream>
 

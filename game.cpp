@@ -11,12 +11,36 @@ void Game::inicializar(sf::RenderWindow *w)
 {
     this->window = w;
 
+    //if(!this->imgPacman.loadFromFile("recursos/imagem/pacman.png"))
+   // {
+    //std::cout << "Erro ao abrir imagem\n";
+    //}
+    //if(!this->imgFundo.loadFromFile("recursos/imagem/fundo1.png"))
+   // {
+   // std::cout << "Erro ao abrir imagem\n";
+   // }
+
+
+    //sf::IntRect rectTexture(100,130,100,100);
+    //this->sptPacman.setTexture(this->imgPacman);
+    //this->sptPacman.setPosition(sf::Vector2f(100,100));
+    //this->sptPacman.setTextureRect(rectTexture);
+    //this->sptPacman.setScale(sf::Vector2f(0.5,0.5));
+
+
     Pacman *p1 = new Pacman();
     p1->setPosition(550.f,430.f);
     p1->memorizaPosicao();
     p1->setColor(sf::Color::Blue);
-    p1->setControles(sf::Keyboard::Up,sf::Keyboard::Down,sf::Keyboard::Right,sf::Keyboard::Left,sf::Keyboard::Num0);
+    p1->setControles(sf::Keyboard::Up,sf::Keyboard::Down,sf::Keyboard::Right,sf::Keyboard::Left,sf::Keyboard::P);
     this->pacman.push_back(p1);
+
+    Painel *pa1 = new Painel("recursos/font/consola.ttf");
+    pa1->setNome("Player 1");
+    pa1->setPosition(820,10);
+    pa1->setPacman(p1);
+    this->paineis.push_back(pa1);
+
 
     Pacman *p2 = new Pacman();
     p2->setPosition(10.f,60.f);
@@ -24,6 +48,12 @@ void Game::inicializar(sf::RenderWindow *w)
     p2->memorizaPosicao();
     p2->setControles(sf::Keyboard::W,sf::Keyboard::S,sf::Keyboard::D,sf::Keyboard::A,sf::Keyboard::Z);
     this->pacman.push_back(p2);
+
+    Painel *pa2 = new Painel("recursos/font/consola.ttf");
+    pa2->setNome("Player 2");
+    pa2->setPosition(820,150);
+    pa2->setPacman(p2);
+    this->paineis.push_back(pa2);
 
     int idxCenario = 0;
     int idxPortal = 0;
@@ -83,6 +113,12 @@ void Game::inicializar(sf::RenderWindow *w)
                 Key *k = new Key(1001,j*10.f,i*10.f,20.f,10.f);
                 this->keys.push_back(k);
             }
+            else if(c=='b')
+            {
+                Caixa *b = new Caixa();
+                b->setPosition(j*10.f,i*10.f);
+                this->caixas.push_back(b);
+            }
         }
     }
 
@@ -94,15 +130,13 @@ void Game::processarEntrada(sf::Event *event, float tempo)
     for(Pacman *p : this->pacman)
     {
         p->memorizaPosicao();
-        p->comandos(tempo);
+        p->comandos(1);
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::L)) // soltar
+        if(sf::Keyboard::isKeyPressed(p->getTeclaComando('S'))) // soltar a chave
         {
-            std::cout << "Tentando soltar a chave\n";
             Key *k = p->soltarChave();
             if(k!=nullptr)
             {
-                std::cout << "existe a chave\n";
                 this->keys.push_back(k);
                 p->setChave(nullptr);
                 break;
@@ -115,8 +149,6 @@ void Game::processarEntrada(sf::Event *event, float tempo)
         g->memorizarPosicao();
         g->mov(0.5);
     }
-
-
 
 
     //colisoes
@@ -142,7 +174,47 @@ void Game::processarEntrada(sf::Event *event, float tempo)
                 g->girarRandom();
             }
         }
+
+        for(Caixa *b : this->caixas)
+        {
+            if(b->colisao(this->bricks.at(i)->getShape()))
+            {
+                b->restauraPosicao();
+
+                for(Pacman *p : this->pacman)
+                {
+                    if(b->colisao(p->getShape()))
+                    {
+                        p->restauraPosicaoValida();
+                    }
+                }
+            }
+        }
     }
+
+    //colisao com caixas
+    for(Caixa *c: this->caixas)
+    {
+        for(Pacman *p : this->pacman)
+        {
+            bool lColisao = c->colisao(p->getShape());
+            if(lColisao)
+            {
+                c->memorizarPosicao();
+                c->mov(p->getDirecao(),1);
+            }
+        }
+
+        for(Ghost *g: this->ghosts)
+        {
+            if(c->colisao(g->getPosition().x, c->getPosition().y, 40.f,40.f))
+            {
+                g->girarAnti();
+                g->girarAnti();
+            }
+        }
+    }
+
 
     // colisão com portal
     vSize = static_cast<int>(this->portais.size());
@@ -178,6 +250,7 @@ void Game::processarEntrada(sf::Event *event, float tempo)
             {
                 idelete = i;
                 this->pacman.at(p)->comer();
+
             }
         }
     }
@@ -188,7 +261,7 @@ void Game::processarEntrada(sf::Event *event, float tempo)
         delete itemDeletar;
     }
 
-    //coliscao com fantastama
+    //colisao com fantastama
     vSize = static_cast<int>(this->ghosts.size());
     for(int i = 0 ; i < vSize;i++)
     {
@@ -200,7 +273,6 @@ void Game::processarEntrada(sf::Event *event, float tempo)
             }
         }
     }
-
 
 
         //colisao com chave
@@ -250,6 +322,9 @@ void Game::processarEntrada(sf::Event *event, float tempo)
             }
         }
         if(idelete>=0) this->doors.erase(this->doors.begin()+idelete);
+
+
+
 
 }
 
@@ -311,6 +386,19 @@ void Game::renderizar()
     {
         p->draw(this->window);
     }
+
+    for(Painel *p : this->paineis)
+    {
+        p->draw(this->window);
+    }
+
+    for(Caixa *b : this->caixas)
+    {
+        b->draw(this->window);
+    }
+
+   // this->sptPacman.setPosition(this->pacman.at(0)->getShape().getPosition());
+   // window->draw(this->sptPacman);
 
 
 

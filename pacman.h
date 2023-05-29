@@ -13,8 +13,8 @@ class Pacman
         Pacman(const Pacman& other);
         Pacman& operator=(const Pacman& other);
 
-        void setDirecao(int d);
-        int getDirecao();
+        void setDirecao(char d);
+        char getDirecao();
         void draw(sf::RenderWindow *w);
         void mov(float v);
         void setPosition(float x,float y);
@@ -27,6 +27,8 @@ class Pacman
 
         void comer();
         void morre();
+
+        int getQuantidadeComida();
 
         bool pegarChave(Key *key);
         bool usarChave(Key *key);
@@ -49,7 +51,7 @@ class Pacman
         sf::Sound sound;
         sf::RectangleShape *corpo;
         sf::RectangleShape *olho;
-        int direcao;
+        char direcao;
         float posX = 0;
         float posY = 0;
         float ant_posX = 0;
