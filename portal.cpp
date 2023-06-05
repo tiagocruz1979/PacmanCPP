@@ -34,6 +34,10 @@ void Portal::setPosition(float x, float y)
 {
     this->corpo->setPosition(sf::Vector2f(y,x));
 }
+sf::Vector2f Portal::getPosition()
+{
+    return sf::Vector2f(this->corpo->getPosition().x, this->corpo->getPosition().y);
+}
 
 const sf::RectangleShape& Portal::getShape()
 {

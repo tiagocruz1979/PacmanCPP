@@ -2,9 +2,8 @@
 
 Wall::Wall(float x, float y)
 {
-    this->brick.setPosition(sf::Vector2f(x,y));
     this->brick.setFillColor(sf::Color::Cyan);
-    this->brick.setSize(sf::Vector2f(10.f,10.f));
+    this->brick.setSize(sf::Vector2f(x,y));
 }
 
 
@@ -21,4 +20,24 @@ void Wall::draw(sf::RenderWindow *w)
 const sf::RectangleShape& Wall::getShape()
 {
     return this->brick;
+}
+
+const sf::Vector2f Wall::getPosition()
+{
+    return this->brick.getPosition();
+}
+
+const sf::Vector2f Wall::getSize()
+{
+    return this->brick.getSize();
+}
+
+void Wall::setColor(sf::Color cor)
+{
+    this->brick.setFillColor(cor);
+}
+
+void Wall::setPosition(float x, float y)
+{
+    this->brick.setPosition(sf::Vector2f(x,y));
 }

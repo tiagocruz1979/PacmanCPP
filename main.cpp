@@ -13,7 +13,7 @@ int main()
 {
 
     sf::RenderWindow window(sf::VideoMode(window_width, window_height), "PacmanCPP");
-    window.setFramerateLimit(500);
+    //window.setFramerateLimit(60);
 
 
     Game *game = new Game();

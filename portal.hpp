@@ -16,6 +16,7 @@ class Portal
         sf::Vector2f getDestino();
         const sf::RectangleShape& getShape();
         void som();
+        sf::Vector2f getPosition();
 
 
 

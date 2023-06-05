@@ -20,6 +20,7 @@ class Caixa
         void restauraPosicao();
 
         void mov(char direcao, float tempo);
+        bool verificarInterseccao(float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2);
 
     protected:
 

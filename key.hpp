@@ -10,6 +10,7 @@ class Key
         Key& operator=(const Key& other);
 
         void setPosition(sf::Vector2f);
+        sf::Vector2f getPosition();
         void draw(sf::RenderWindow *w);
         const sf::RectangleShape& getShape();
         void setColor(sf::Color cor);

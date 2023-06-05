@@ -19,6 +19,7 @@ class Pacman
         void mov(float v);
         void setPosition(float x,float y);
         void setColor(sf::Color);
+        sf::Vector2f getPosition();
 
         void restauraPosicaoValida();
         void memorizaPosicao();

@@ -66,6 +66,8 @@
 		<Unit filename="painel.hpp" />
 		<Unit filename="portal.cpp" />
 		<Unit filename="portal.hpp" />
+		<Unit filename="util.cpp" />
+		<Unit filename="util.hpp" />
 		<Unit filename="wall.cpp" />
 		<Unit filename="wall.hpp" />
 		<Extensions>

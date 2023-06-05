@@ -1,7 +1,6 @@
 #include "game.h"
 #include <iostream>
 
-
 void Game::finalizar()
 {
     delete this->window;
@@ -68,11 +67,17 @@ void Game::inicializar(sf::RenderWindow *w)
             char c = cen.at(i).at(j);
             if(c=='f')
             {
-                this->foods.push_back(new Food(j*10.f,i*10.f));
+                Food *f = new Food(8.f,8.f);
+                f->setColor(sf::Color::Blue);
+                f->setPosition(j*10.f,i*10.f);
+                this->foods.push_back(f);
             }
             else if (c=='p')
             {
-                this->bricks.push_back(new Wall(j*10.f, i*10.f));
+                Wall *b = new Wall(10.f,10.f);
+                b->setColor(sf::Color::Cyan);
+                b->setPosition(j*b->getSize().x, i*b->getSize().y);
+                this->bricks.push_back(b);
             }
             else if(c=='t') // portal de transporte
             {
@@ -117,6 +122,7 @@ void Game::inicializar(sf::RenderWindow *w)
             {
                 Caixa *b = new Caixa();
                 b->setPosition(j*10.f,i*10.f);
+                b->memorizarPosicao();
                 this->caixas.push_back(b);
             }
         }
@@ -127,10 +133,11 @@ void Game::inicializar(sf::RenderWindow *w)
 void Game::processarEntrada(sf::Event *event, float tempo)
 {
 
+    // movimento do Pacman
     for(Pacman *p : this->pacman)
     {
         p->memorizaPosicao();
-        p->comandos(1);
+        p->comandos(0.5);
 
         if(sf::Keyboard::isKeyPressed(p->getTeclaComando('S'))) // soltar a chave
         {
@@ -144,10 +151,11 @@ void Game::processarEntrada(sf::Event *event, float tempo)
         }
     }
 
+    //movimento dos Fantasmas
     for(Ghost *g : this->ghosts)
     {
         g->memorizarPosicao();
-        g->mov(0.5);
+        g->mov(0.25);
     }
 
 
@@ -155,35 +163,37 @@ void Game::processarEntrada(sf::Event *event, float tempo)
 
     //colisão com parede
     int vSize = 0;
-    vSize = static_cast<int>(this->bricks.size());
-    for(int i =0; i < vSize ;i++)
+
+
+    //colisao da caixa com o pacman - mover caixa
+    for(Caixa *c: this->caixas)
     {
-        for(int p = 0 ; p < 2 ;p++)
+        c->memorizarPosicao();
+        for(Pacman *p : this->pacman)
         {
-            if(this->bricks.at(i)->getShape().getGlobalBounds().intersects(this->pacman.at(p)->getShape().getGlobalBounds()))
+            bool colisao = verificarInterseccao(c->getPosition().x,c->getPosition().y,40.f,40.f,p->getPosition().x, p->getPosition().y,40.f,40.f);
+            if(colisao)
             {
-                this->pacman.at(p)->restauraPosicaoValida();
+                char dir = p->getDirecao();
+                c->mov(dir,0.50);
             }
         }
-
-        for(Ghost *g : this->ghosts)
+    }
+    //colisao da caixa com parede - restaurar posicao
+    for(Wall *b: this->bricks)
+    {
+        for(Caixa *c: this->caixas)
         {
-            if(g->colision(this->bricks.at(i)->getShape()))
+            bool colisao = verificarInterseccao(c->getPosition().x,c->getPosition().y,40.f,40.f,b->getPosition().x, b->getPosition().y,10.f,10.f);
+            if(colisao)
             {
-                g->restaurarPosicao();
-                g->girarRandom();
-            }
-        }
+                c->restauraPosicao();
 
-        for(Caixa *b : this->caixas)
-        {
-            if(b->colisao(this->bricks.at(i)->getShape()))
-            {
-                b->restauraPosicao();
-
-                for(Pacman *p : this->pacman)
+                //verificar se afeta posicao do pacman
+                for(Pacman *p: this->pacman)
                 {
-                    if(b->colisao(p->getShape()))
+                    bool colisao = verificarInterseccao(c->getPosition().x,c->getPosition().y,40.f,40.f,p->getPosition().x, p->getPosition().y,40.f,40.f);
+                    if(colisao)
                     {
                         p->restauraPosicaoValida();
                     }
@@ -192,65 +202,57 @@ void Game::processarEntrada(sf::Event *event, float tempo)
         }
     }
 
-    //colisao com caixas
-    for(Caixa *c: this->caixas)
+
+    //colisao do pacman com a Parede
+    for(Pacman *p : this->pacman)
     {
-        for(Pacman *p : this->pacman)
+        for(Wall *b : this->bricks)
         {
-            bool lColisao = c->colisao(p->getShape());
-            if(lColisao)
+            bool colisao = verificarInterseccao(p->getPosition().x,p->getPosition().y,40.f,40.f,b->getPosition().x, b->getPosition().y,10.f,10.f);
+            if(colisao)
             {
-                c->memorizarPosicao();
-                c->mov(p->getDirecao(),1);
+                p->restauraPosicaoValida();
             }
         }
-
-        for(Ghost *g: this->ghosts)
+    }
+    //colisao pacman com fantastama
+    for(Pacman *p :  this->pacman)
+    {
+        for(Ghost *g : this->ghosts)
         {
-            if(c->colisao(g->getPosition().x, c->getPosition().y, 40.f,40.f))
+            bool colisao = verificarInterseccao(p->getPosition().x,p->getPosition().y,40.f,40.f,g->getPosition().x, g->getPosition().y,40.f,40.f);
+            if(colisao)
             {
-                g->girarAnti();
-                g->girarAnti();
+                p->morre();
             }
         }
     }
 
-
-    // colisão com portal
-    vSize = static_cast<int>(this->portais.size());
-    for(int i = 0 ; i < vSize ;i++)
+    // colisão pacman com portal
+    for(Pacman *p :  this->pacman)
     {
-        for(int p = 0 ; p < 2 ;p++)
+        for(Portal *d : this->portais)
         {
-            if(this->portais.at(i)->getShape().getGlobalBounds().intersects(this->pacman.at(p)->getShape().getGlobalBounds()))
+            bool colisao = verificarInterseccao(p->getPosition().x,p->getPosition().y,40.f,40.f,d->getPosition().x, d->getPosition().y,40.f,40.f);
+            if(colisao)
             {
-                this->pacman.at(p)->setPosition(this->portais.at(i)->getDestino().x, this->portais.at(i)->getDestino().y);
-                this->portais.at(i)->som();
-            }
-        }
-
-        int n = this->ghosts.size();
-        for(int j = 0 ; j < n ; j++)
-        {
-            if(this->ghosts.at(j)->colision(this->portais.at(i)->getShape()))
-            {
-               this->ghosts.at(j)->setPosition(this->portais.at(i)->getDestino().x,this->portais.at(i)->getDestino().y);
+                p->setPosition(d->getDestino().x,d->getDestino().y);
+                d->som();
             }
         }
     }
-
-    // colisão com comida
+    // colisão pacman com comida
     vSize = static_cast<int>(this->foods.size());
     int idelete = -1;
     for(int i =0; i < vSize ;i++)
     {
-        for(int p = 0 ; p < 2 ;p++)
+        for(Pacman *p : this->pacman)
         {
-            if(this->foods.at(i)->getShape().getGlobalBounds().intersects(this->pacman.at(p)->getShape().getGlobalBounds()))
+            bool colisao = verificarInterseccao(p->getPosition().x,p->getPosition().y,40.f,40.f,foods.at(i)->getPosition().x, foods.at(i)->getPosition().y,5.f,5.f);
+            if(colisao)
             {
                 idelete = i;
-                this->pacman.at(p)->comer();
-
+                p->comer();
             }
         }
     }
@@ -261,69 +263,93 @@ void Game::processarEntrada(sf::Event *event, float tempo)
         delete itemDeletar;
     }
 
-    //colisao com fantastama
-    vSize = static_cast<int>(this->ghosts.size());
-    for(int i = 0 ; i < vSize;i++)
+    // colisao do Pacman com a chave
+    int key_deletar = -1;
+    int i = 0;
+    for(Key *k : this->keys)
     {
-        for(int p = 0 ; p < 2 ; p++)
+        for(Pacman *p : this->pacman)
         {
-            if(this->ghosts.at(i)->colision(this->pacman.at(p)->getShape()))
+            bool colisao = verificarInterseccao(p->getPosition().x,p->getPosition().y,40.f,40.f,k->getPosition().x,k->getPosition().y,k->getShape().getSize().x, k->getShape().getSize().y);
+            if(colisao)
             {
-                this->pacman.at(p)->morre();
+                if(p->pegarChave(k))
+                {
+                    key_deletar = i;
+                }
+            }
+        }
+    i++;
+    }
+    if(key_deletar>=0) this->keys.erase(this->keys.begin()+key_deletar);
+
+    //colisao do Pacman com a porta
+    vSize = static_cast<int>(this->doors.size());
+    idelete=-1;
+    for(int i = 0 ; i < vSize ;i++)
+    {
+        for(Pacman *p : this->pacman)
+        {
+            if(p->getShape().getGlobalBounds().intersects(this->doors.at(i)->getShape().getGlobalBounds()))
+            {
+                if(p->getChave() != nullptr && p->getChave()->getSegredo()==this->doors.at(i)->getSegredo())
+                {
+                    this->doors.at(i)->som();
+                    idelete = i;
+                    p->setChave(nullptr);
+                    break;
+                 }
+                 else
+                 {
+                    std::cout << "Tipo incorreto da chave\n";
+                    p->restauraPosicaoValida();
+                 }
+             }
+        }
+    }
+    if(idelete>=0) this->doors.erase(this->doors.begin()+idelete);
+
+
+
+    //Colisao do Fantasma com a Parede
+    for(Wall *b : this->bricks)
+    {
+        for(Ghost *g : this->ghosts)
+        {
+            bool colisao = verificarInterseccao(b->getPosition().x,b->getPosition().y, 10.f,10.f,g->getPosition().x,g->getPosition().y,40.f,40.f);
+            if(colisao)
+            {
+                g->restaurarPosicao();
+                g->girarRandom();
             }
         }
     }
-
-
-        //colisao com chave
-        vSize = static_cast<int>(this->keys.size());
-        idelete = -1;
-        for(int i = 0 ; i < vSize ;i++)
+    // colisão Fantasma com portal
+    for(Ghost *g :  this->ghosts)
+    {
+        for(Portal *d : this->portais)
         {
-            for(Pacman *p: this->pacman)
+            bool colisao = verificarInterseccao(g->getPosition().x,g->getPosition().y,40.f,40.f,d->getPosition().x, d->getPosition().y,40.f,40.f);
+            if(colisao)
             {
-                if(p->getShape().getGlobalBounds().intersects(this->keys.at(i)->getShape().getGlobalBounds()))
-                {
-                    if(p->pegarChave(this->keys.at(i)))
-                    {
-                        //this->keys.erase(this->keys.begin()+i);
-                        idelete = i;
-                        break;
-                    }
-                }
-            }
-         }
-         if(idelete>=0) this->keys.erase(this->keys.begin()+idelete);
-
-
-        vSize = static_cast<int>(this->doors.size());
-        idelete=-1;
-        for(int i = 0 ; i < vSize ;i++)
-        {
-            for(Pacman *p : this->pacman)
-            {
-                if(p->getShape().getGlobalBounds().intersects(this->doors.at(i)->getShape().getGlobalBounds()))
-                {
-                    if(p->getChave() != nullptr && p->getChave()->getSegredo()==this->doors.at(i)->getSegredo())
-                    {
-                        this->doors.at(i)->som();
-                        std::cout << "porta aberta\n";
-                        idelete = i;
-                        p->setChave(nullptr);
-                        //this->doors.erase(this->doors.begin()+i);
-                        break;
-                    }
-                    else
-                    {
-                        std::cout << "Tipo incorreto da chave\n";
-                        p->restauraPosicaoValida();
-                    }
-                }
+                g->setPosition(d->getDestino().x,d->getDestino().y);
+                d->som();
             }
         }
-        if(idelete>=0) this->doors.erase(this->doors.begin()+idelete);
-
-
+    }
+    //colisao do Fantasma com a Caixa
+    for(Ghost *g :  this->ghosts)
+    {
+        for(Caixa *c : this->caixas)
+        {
+            bool colisao = verificarInterseccao(g->getPosition().x,g->getPosition().y,40.f,40.f,c->getPosition().x, c->getPosition().y,40.f,40.f);
+            if(colisao)
+            {
+                g->girarAnti();
+                g->girarAnti();
+            }
+        }
+    }
 
 
 }
@@ -396,10 +422,6 @@ void Game::renderizar()
     {
         b->draw(this->window);
     }
-
-   // this->sptPacman.setPosition(this->pacman.at(0)->getShape().getPosition());
-   // window->draw(this->sptPacman);
-
 
 
 }

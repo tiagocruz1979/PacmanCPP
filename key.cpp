@@ -49,4 +49,9 @@ void Key::setColor(sf::Color cor)
     this->corpo.setFillColor(cor);
 }
 
+sf::Vector2f Key::getPosition()
+{
+    return sf::Vector2f(this->corpo.getPosition().x, this->corpo.getPosition().y);
+}
+
 

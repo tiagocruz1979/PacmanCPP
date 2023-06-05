@@ -10,6 +10,7 @@
 #include "key.hpp"
 #include "painel.hpp"
 #include "caixa.hpp"
+#include "util.hpp"
 
 
 const int window_width = 1024;
@@ -30,6 +31,7 @@ private:
     std::vector<Key*> keys;
     std::vector<Painel*>paineis;
     std::vector<Caixa*>caixas;
+    std::vector<std::vector<Wall*>> new_bricks;
 
 public:
     Game();

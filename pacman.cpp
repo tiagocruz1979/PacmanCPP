@@ -259,3 +259,7 @@ int Pacman::getQuantidadeComida()
     return this->comida;
 }
 
+sf::Vector2f Pacman::getPosition()
+{
+    return this->corpo->getPosition();
+}

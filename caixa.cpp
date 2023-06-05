@@ -26,49 +26,9 @@ void Caixa::draw(sf::RenderWindow* w)
 }
 
 
-bool Caixa::colisao(const sf::RectangleShape& obj)
-{
-    sf::RectangleShape &c = this->corpo; // referencia para o corpo da caixa
-    float cx = c.getPosition().x;
-    float cy = c.getPosition().y;
-    float cl = c.getSize().x;
-    float ch = c.getSize().y;
-    float ox = obj.getPosition().x;
-    float oy = obj.getPosition().y;
-    float ol = obj.getSize().x;
-    float oh = obj.getSize().y;
-
-    //if(oy+oh>cy && oy<cy+ch && ox+ol>cx && ox<cx+cl) return true;
-    if(oy+oh<=cy) return false;
-    if(oy>=cy+ch) return false;
-    if(ox>=cx+ch) return false;
-    if(ox+ol<=cx) return false;
 
 
-    return true;
-}
 
-bool Caixa::colisao(float x, float y, float largura, float altura)
-{
-    sf::RectangleShape &c = this->corpo; // referencia para o corpo da caixa
-    float cx = c.getPosition().x;
-    float cy = c.getPosition().y;
-    float cl = c.getSize().x;
-    float ch = c.getSize().y;
-    float ox = x;
-    float oy = y;
-    float ol = largura;
-    float oh = altura;
-
-    if(oy+oh>cy && oy<cy+ch && ox+ol>cx && ox<cx+cl) return true;
-    //if(oy+oh<=cy) return false;
-    //if(oy>=cy+ch) return false;
-    //if(ox>=cx+ch) return false;
-    //if(ox+ol<=cx) return false;
-
-
-    return false;
-}
 
 void Caixa::memorizarPosicao()
 {
@@ -78,8 +38,8 @@ void Caixa::memorizarPosicao()
 
 void Caixa::restauraPosicao()
 {
-    std::cout << "Posicao Atual " << this->corpo.getPosition().x << ',' << this->corpo.getPosition().y << '\n';
-    std::cout << "Restaurando a posicao " << memoPos.x << ',' << memoPos.y << '\n';
+    //std::cout << "Posicao Atual " << this->corpo.getPosition().x << ',' << this->corpo.getPosition().y << '\n';
+    //std::cout << "Restaurando a posicao " << memoPos.x << ',' << memoPos.y << '\n';
     setPosition(memoPos.x,memoPos.y);
 }
 
